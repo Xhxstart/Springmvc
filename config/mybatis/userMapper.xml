@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+ 例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀)
+ namespace要和statement的名字对上 -->
+<mapper namespace="com.xhx.mapper.UserMapper">
+     <!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复
+     使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型
+     resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回
+     User类就是users表所对应的实体类
+     -->
+     <!-- 
+     #{}表示一个占位符  {}里面的值可以是任意
+     ${}表示拼接sql语句，不加任何修饰添加在sql语句中 “可能会引起sql注入”
+     ${value}:如果接受的参数是简单类型只能是value
+        根据id查询得到一个user对象
+      -->
+     <select id="findUserById" parameterType="com.xhx.ssm.po.User" 
+         resultType="com.xhx.ssm.po.User">
+         select * from BC_MST_SHAIN_XHX where SHAIN_CD=#{SHAIN_CD}
+     </select>
+     <sql id="sql_where">    
+　　　　　　　　<if test="KAISHA_CD != null and KAISHA_CD.length()>0">
+			AND KAISHA_CD = #{KAISHA_CD}
+		</if>
+		<if test="SHAIN_CD != null and SHAIN_CD.length()>0">
+			AND SHAIN_CD LIKE '${SHAIN_CD}%'	
+		</if>
+　　　　　　　　<if test="SHAIN_NM != null and SHAIN_NM.length()>0">
+			AND SHAIN_NM LIKE '%${SHAIN_NM}%'	
+		</if>　
+		<if test="SHAIN_KANA != null and SHAIN_KANA.length()>0">
+			AND SHAIN_KANA LIKE '%${SHAIN_KANA}%'	
+		</if>　
+		<if test="SHIYOU_STR_FR != null">
+			AND SHIYOU_STR_TM >= #{SHIYOU_STR_FR}	
+		</if>
+		<if test="SHIYOU_STR_TO != null">
+			AND SHIYOU_STR_TM &lt;= #{SHIYOU_STR_TO}	
+		</if>
+		<if test="SHIYOU_END_FR != null">
+			AND SHIYOU_END_TM >= #{SHIYOU_END_FR}	
+		</if>
+		<if test="SHIYOU_END_TO != null">
+			AND SHIYOU_END_TM &lt;= #{SHIYOU_END_TO}	
+		</if>　　　　　　　
+　　　　</sql>
+      <select id="findUserByName" parameterType="com.xhx.ssm.po.User" 
+         resultType="com.xhx.ssm.po.User">
+         select SHAIN_NM,
+         		SHAIN_CD,
+         		MAIL
+         		 FROM (
+			SELECT SHAIN_NM,
+			SHAIN_CD,
+			MAIL,
+			ROW_NUMBER() OVER ( ORDER BY SHAIN_CD ) AS row_num
+			FROM BC_MST_SHAIN_XHX WHERE 1=1
+			<include refid="sql_where"></include>)
+			AS t
+			WHERE t.row_num BETWEEN #{GET_ROW_FR} AND #{GET_ROW_TO}
+     </select>
+     <select id="findPageCountByName" parameterType="com.xhx.ssm.po.User" 
+         resultType="java.lang.Integer">
+         select COUNT(*)			
+			FROM BC_MST_SHAIN_XHX WHERE 1=1 <include refid="sql_where"></include>		
+     </select>
+     <select id="findUserByParams" parameterType="com.xhx.ssm.po.SearchUser" 
+         resultType="com.xhx.ssm.po.User">
+         select * from BC_MST_SHAIN_XHX where SHAIN_CD=#{SHAIN_CD}
+     </select>
+     <!-- 需要传入的查询条件很复杂的情况 （查询今天6点前买手机的男用户） 综合查询
+     	使用自定义 的包装类型pojo
+     
+     -->
+</mapper>
