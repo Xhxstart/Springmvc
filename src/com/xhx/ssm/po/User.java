@@ -20,7 +20,7 @@ public class User implements Serializable{
 	
 	@NotBlank(message="社员名不为空")
 	private String SHAIN_NM;
-	@Length(max=6,message="最长为6字符")
+
 	private String SHAIN_KANA;
 	
 	private String SHOKUI_KBN;
