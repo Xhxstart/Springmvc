@@ -25,9 +25,33 @@
 		</style>
 <title>020MD</title>
 <script type="text/javascript">      
-    function PageClick(CurrentPage) {
-    	 document.getElementById("CurrentPage").value = CurrentPage;
-    	 document.getElementById("login").submit();
+    function dataCheck() {
+    	var startTime=$("#beginScanTime").val(); 
+    	var endTime=$("#endScanTime").val();  
+    	var today=new Date();//获取当前时间(没有格式化)  
+    	var year=today.getFullYear();//获取年份,四位数  
+    	var month=today.getMonth()+1;//获取月份,0-11  
+    	var day=today.getDate();//获取几号  
+    	if(month<=9){//格式化  
+    	    month="0"+month;  
+    	}  
+    	if(day<=9){  
+    	    day="0"+day;  
+    	}  
+    	today=year+"-"+month+"-"+day;  
+    	if(startTime!=""){
+	    	if(today>startTime){//对比日期大小  
+	    	    alert("开始监控日期要大于当前日期!");  
+	    	    return false;  
+	    	} 
+    	}
+    	if(endTime!=""){
+    		if(startTime>=endTime){  
+        	    alert("开始监控日期要小于结束监控日期!");  
+        	    return false;  
+        	}  
+    	}
+    	
     }
     $(document).ready(function(){
     $(".date").fdatepicker({
@@ -42,7 +66,7 @@
 <p> 
 password:${user.SHAIN_CD }  --%>
 	<div style=background-color:#00b0ff > 		
-		<form action="search.html" method="post" id="login" style="width:100%" class="form-inline" role="form">		
+		<form action="search.html" method="post"  style="width:100%" class="form-inline" role="form">		
 			<label style="width:50%"><br><span>従業員情報登録</span></label>
 			<input type="submit" class="btn btn-info pull-right" value="一覧"></input>
 		</form>		
@@ -58,14 +82,14 @@ password:${user.SHAIN_CD }  --%>
 		<label class="col-sm-3 control-label">従業員名（ｶﾅ）：</label>
 		<input type="text" class="form-control" style="width:40%" name="SHAIN_KANA" value="${user.SHAIN_KANA }"><br>
 		<label class="col-sm-3 control-label">Email：</label>
-		<input type="text" class="form-control" style="width:40%" name="SHAIN_KANA" value="${user.SHAIN_KANA }"><br>
+		<input type="text" class="form-control" style="width:40%" name="MAIL" value="${user.MAIL }"><br>
 		<label class="col-sm-3 control-label">使用開始日：</label>		
-		<input type="text" class="date form-control" class="form-control" style="width:15%" name="SHIYOU_STR_FR" value="<fmt:formatDate value="${user.SHIYOU_STR_FR}" pattern="yyyy/MM/dd"/>">	<br>			
+		<input type="text" class="date form-control" class="form-control" id="beginScanTime" style="width:15%" name="SHIYOU_STR_FR" value="<fmt:formatDate value="${user.SHIYOU_STR_FR}" pattern="yyyy/MM/dd"/>">	<br>			
 		<label class="col-sm-3 control-label">使用終了日：</label>
-		<input type="text" class="date form-control" class="form-control" style="width:15%" name="SHIYOU_END_FR" value="<fmt:formatDate value="${user.SHIYOU_END_FR}" pattern="yyyy/MM/dd"/>">		
+		<input type="text" class="date form-control" class="form-control" id="endScanTime" style="width:15%" name="SHIYOU_END_FR" value="<fmt:formatDate value="${user.SHIYOU_END_FR}" pattern="yyyy/MM/dd"/>">		
 	</div>
 	<div align="right" style=background-color:#00b0ff> 
-		<input type="button" class="btn btn-info"  value="確　認"/>		 
+		<input type="button" id="check" class="btn btn-info" onclick="dataCheck()" value="確　認"/>		 
 		<input type="submit" class="btn btn-info" value="登　録" />
 	</div>	
 	</form>

@@ -24,14 +24,42 @@
 		.container { margin:0 auto;  max-width:960px;padding:20px;}
 		</style>
 <title>010LD</title>
-<script type="text/javascript">      
+<script type="text/javascript"> 
+	function dataCheck() {
+		var startTime=$("#STbeginScanTime").val(); 
+		var endTime=$("#STendScanTime").val();  
+		var today=new Date();//获取当前时间(没有格式化)  
+		var year=today.getFullYear();//获取年份,四位数  
+		var month=today.getMonth()+1;//获取月份,0-11  
+		var day=today.getDate();//获取几号  
+		if(month<=9){//格式化  
+		    month="0"+month;  
+		}  
+		if(day<=9){  
+		    day="0"+day;  
+		}  
+		today=year+"-"+month+"-"+day;  
+		if(startTime!=""){
+	    	if(today>startTime){//对比日期大小  
+	    	    alert("开始使用日期要大于当前日期!");  
+	    	    return false;  
+	    	} 
+		}
+		if(endTime!=""){
+			if(startTime>=endTime){  
+	    	    alert("开始使用日期检索范围不正!");  
+	    	    return false;  
+	    	}  
+		}
+		
+	}
     function PageClick(CurrentPage) {
     	 document.getElementById("CurrentPage").value = CurrentPage;
     	 document.getElementById("login").submit();
     }
     $(document).ready(function(){
     $(".date").fdatepicker({
-		format: 'yyyy-mm-dd',
+		format: 'yyyy/mm/dd',
 		pickTime: false
 	});
 });
@@ -62,18 +90,18 @@ password:${user.SHAIN_CD }  --%>
 		<input type="text" class="form-control" style="width:40%" name="SHAIN_KANA" value="${user.SHAIN_KANA }">（部分一致）<br>
 		<label class="col-sm-3 control-label">使用開始日：</label>
 		
-		<input type="text" class="date form-control"  style="width:15%" name="SHIYOU_STR_FR" value="<fmt:formatDate value="${user.SHIYOU_STR_FR}" pattern="yyyy/MM/dd"/>">		
+		<input type="text" class="date form-control" id="STbeginScanTime" style="width:15%" name="SHIYOU_STR_FR" value="<fmt:formatDate value="${user.SHIYOU_STR_FR}" pattern="yyyy/MM/dd"/>">		
 		<label>～</label>
-		<input type="text" class="date form-control"  style="width:15%" name="SHIYOU_STR_TO" value="<fmt:formatDate value="${user.SHIYOU_STR_TO}" pattern="yyyy/MM/dd"/>"><br>
+		<input type="text" class="date form-control" id="STendScanTime" style="width:15%" name="SHIYOU_STR_TO" value="<fmt:formatDate value="${user.SHIYOU_STR_TO}" pattern="yyyy/MM/dd"/>"><br>
 		<label class="col-sm-3 control-label">使用終了日：</label>
-		<input type="text" class="date form-control"  style="width:15%" name="SHIYOU_END_FR" value="<fmt:formatDate value="${user.SHIYOU_END_FR}" pattern="yyyy/MM/dd"/>">
+		<input type="text" class="date form-control" id="ENDfrScanTime" style="width:15%" name="SHIYOU_END_FR" value="<fmt:formatDate value="${user.SHIYOU_END_FR}" pattern="yyyy/MM/dd"/>">
 		<label>～</label>
-		<input type="text" class="date form-control"  style="width:15%" name="SHIYOU_END_TO" value="<fmt:formatDate value="${user.SHIYOU_END_TO}" pattern="yyyy/MM/dd"/>"><br>
+		<input type="text" class="date form-control" id="ENDtoScanTime" style="width:15%" name="SHIYOU_END_TO" value="<fmt:formatDate value="${user.SHIYOU_END_TO}" pattern="yyyy/MM/dd"/>"><br>
 	</div>
 	<div align="right" style=background-color:#00b0ff> 
 		表示件数：<input type="text" class="form-control" style="width:10%" name="KENSU" value="${user.KENSU }"/>
 		 件<input type="hidden" id="CurrentPage"  name="CURRENTPAGE" value="">
-		<input type="submit" class="btn btn-info" value="検 索" />
+		<input type="submit" class="btn btn-info" onclick="dataCheck()" value="検 索" />
 	</div>	
 	</form:form>
 

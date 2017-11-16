@@ -73,7 +73,7 @@ public class UserController {
 		return mav;
 	}
 	/***
-	 * 用户登录
+	 * 検索
 	 * <p>注解配置，只允许post方法提交
 	 * 
 	 * return
@@ -121,7 +121,7 @@ public class UserController {
 	@RequestMapping(value="inser")
 	public ModelAndView inser(String SHAIN_CD, User user,ModelAndView mav ,HttpSession session) throws Exception {
 		//创建usermapper对象,mybatis自动生成Mapper代理对象
-		UserMapper userMapper = (UserMapper) ac.getBean("userMapper");
+		
 		mav.addObject("user",user);
 		mav.setViewName("020MD");
 			

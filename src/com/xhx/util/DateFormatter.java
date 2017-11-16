@@ -14,12 +14,12 @@ public class DateFormatter implements Formatter<Date> {
 
 	
 	public Date parse(String text, Locale locale) throws ParseException {
-		SimpleDateFormat  format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
+		SimpleDateFormat  format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss",Locale.getDefault());
 		Date date = null;
 		try {
 			date = format.parse(text);
 		} catch (Exception e) {
-			format = new SimpleDateFormat("yyyy-MM-dd",Locale.JAPAN);
+			format = new SimpleDateFormat("yyyy/MM/dd",Locale.JAPAN);
 			date = format.parse(text);			
 		}
 		return date;

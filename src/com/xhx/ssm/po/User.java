@@ -13,15 +13,15 @@ public class User implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@NotBlank(message="公司名不为空")
+	@NotBlank(message="{password.null.error}")
 	private String KAISHA_CD;
 	
 	private String SHAIN_CD;
 	
-	@NotBlank(message="社员名不为空")
+	@NotBlank(message="{username.null.error}")
 	private String SHAIN_NM;
 
-	private String SHAIN_KANA;
+	private String SHAIN_KANA;	
 	
 	private String SHOKUI_KBN;
 	
