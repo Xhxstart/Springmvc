@@ -3,19 +3,26 @@ package com.xhx.controller;
 import java.util.List;
 
 
+
+
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xhx.mapper.UserMapper;
 import com.xhx.ssm.po.User;
+import com.xhx.ssm.po.User.First;
+import com.xhx.ssm.po.User.Second;
 import com.xhx.validator.UserValidator;
 //import com.xhx.validator.UserValidator;
 
@@ -36,7 +43,7 @@ public class UserController {
 	 * @throws Exception 
 	 * ***/
 	@RequestMapping(value="login")
-	public ModelAndView login(@Valid  @ModelAttribute("user") User user,Errors errors,ModelAndView mav) throws Exception {
+	public ModelAndView login(@Validated({ First.class} ) @ModelAttribute("user") User user,Errors errors,ModelAndView mav) throws Exception {
 		//创建usermapper对象,mybatis自动生成Mapper代理对象
 		UserMapper userMapper = (UserMapper) ac.getBean("userMapper");
 		Integer row_Fr,row_To,kensu,count,currentpage;		
@@ -119,7 +126,7 @@ public class UserController {
 	
 	
 	@RequestMapping(value="inser")
-	public ModelAndView inser(String SHAIN_CD, User user,ModelAndView mav ,HttpSession session) throws Exception {
+	public ModelAndView inser(String SHAIN_CD, @Validated({ First.class,Second.class } )  @ModelAttribute("user") User user,Errors errors,ModelAndView mav ,HttpSession session) throws Exception {
 		//创建usermapper对象,mybatis自动生成Mapper代理对象
 		
 		mav.addObject("user",user);

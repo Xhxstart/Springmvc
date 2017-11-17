@@ -3,9 +3,11 @@ package com.xhx.ssm.po;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.*;;
 
 public class User implements Serializable{
 	/**
@@ -13,24 +15,30 @@ public class User implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@NotBlank(message="{password.null.error}")
+	@Pattern(regexp="^[0-9A-Za-z]*$", message="{code.fmt.error}",groups = {First.class , Second.class })
+	@NotBlank(message="{password.null.error}",groups = { First.class ,Second.class})
 	private String KAISHA_CD;
 	
+	@Pattern(regexp="^[0-9A-Za-z]*$", message="{code.fmt.error}",groups = { Second.class })
 	private String SHAIN_CD;
 	
-	@NotBlank(message="{username.null.error}")
+	@NotBlank(message="{username.null.error}",groups = { First.class ,Second.class})
 	private String SHAIN_NM;
 
+	@Pattern(regexp="^[^ -~｡-ﾟ]*$", message="{name.fmt.error}",groups = { Second.class })
 	private String SHAIN_KANA;	
 	
 	private String SHOKUI_KBN;
 	
+	@Email(message="{email.null.error}",groups = { Second.class })
 	private String MAIL;
 	
+	@Past(message="{date.fmtFr.error}",groups = { Second.class })
 	private Date SHIYOU_STR_FR;
 	
 	private Date SHIYOU_STR_TO;
 	
+	@Future(message="{date.fmtTo.error}",groups = { Second.class })
 	private Date SHIYOU_END_FR;	
 
 	private Date SHIYOU_END_TO;
@@ -51,6 +59,11 @@ public class User implements Serializable{
 	
 	private Integer PAGECOUNT;
 	
+	public interface First {  
+	}  
+	  
+	public interface Second {  
+	} 
 	public Date getSHIYOU_STR_FR() {
 		return SHIYOU_STR_FR;
 	}

@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
-<%@ page import="com.xhx.ssm.po.User" %>
+<jsp:useBean id="user" class="com.xhx.ssm.po.User" scope="request" ></jsp:useBean>	
 <%@ page language="java" import="java.util.*" %>
 <%@ page language="java" import="java.text.SimpleDateFormat" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@taglib prefix ="form" uri="http://www.springframework.org/tags/form" %>
  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -41,13 +41,13 @@
     	today=year+"-"+month+"-"+day;  
     	if(startTime!=""){
 	    	if(today>startTime){//对比日期大小  
-	    	    alert("开始监控日期要大于当前日期!");  
+	    	    alert("开始使用日要大于当前日期!");  
 	    	    return false;  
 	    	} 
     	}
     	if(endTime!=""){
     		if(startTime>=endTime){  
-        	    alert("开始监控日期要小于结束监控日期!");  
+        	    alert("使用开始日要小于使用终了日!");  
         	    return false;  
         	}  
     	}
@@ -55,7 +55,7 @@
     }
     $(document).ready(function(){
     $(".date").fdatepicker({
-		format: 'yyyy-mm-dd',
+		format: 'yyyy/mm/dd',
 		pickTime: false
 	});
 });
@@ -71,28 +71,35 @@ password:${user.SHAIN_CD }  --%>
 			<input type="submit" class="btn btn-info pull-right" value="一覧"></input>
 		</form>		
 	</div>
-	<form action="inser.html" method="post" id="login" style="width:100%" class="form-inline" role="form">
+	<form:form modelAttribute="user" action="inser.html" method="post" id="login" style="width:100%" class="form-inline" role="form">
 	<div align="left" style=background-color:#9d9d9d>
 		<label class="col-sm-3 control-label">会社：</label>
-		<input type="text" class="form-control" style="width:15%" name="KAISHA_CD" value="${user.KAISHA_CD }"/><br>
+		<input type="text" class="form-control" style="width:15%" name="KAISHA_CD" value="${user.KAISHA_CD }"/>
+		<form:errors path="KAISHA_CD" cssStyle="color:red"/><br>
 		<label class="col-sm-3 control-label">従業員コード ：</label>
-		<input type="text" class="form-control" style="width:15%" name="SHAIN_CD" value="${user.SHAIN_CD }"><br>
+		<input type="text" class="form-control" style="width:15%" name="SHAIN_CD" value="${user.SHAIN_CD }">
+		<form:errors path="SHAIN_CD" cssStyle="color:red"/><br>
 		<label class="col-sm-3 control-label">従業員名 ：</label>
-		<input type="text" class="form-control" style="width:40%" name="SHAIN_NM" value="${user.SHAIN_NM }"><br>
+		<input type="text" class="form-control" style="width:40%" name="SHAIN_NM" value="${user.SHAIN_NM }">
+		<form:errors path="SHAIN_NM" cssStyle="color:red"/><br>
 		<label class="col-sm-3 control-label">従業員名（ｶﾅ）：</label>
-		<input type="text" class="form-control" style="width:40%" name="SHAIN_KANA" value="${user.SHAIN_KANA }"><br>
+		<input type="text" class="form-control" style="width:40%" name="SHAIN_KANA" value="${user.SHAIN_KANA }">
+		<form:errors path="SHAIN_KANA" cssStyle="color:red"/><br>
 		<label class="col-sm-3 control-label">Email：</label>
-		<input type="text" class="form-control" style="width:40%" name="MAIL" value="${user.MAIL }"><br>
+		<input type="text" class="form-control" style="width:40%" name="MAIL" value="${user.MAIL }">
+		<form:errors path="MAIL" cssStyle="color:red"/><br>
 		<label class="col-sm-3 control-label">使用開始日：</label>		
-		<input type="text" class="date form-control" class="form-control" id="beginScanTime" style="width:15%" name="SHIYOU_STR_FR" value="<fmt:formatDate value="${user.SHIYOU_STR_FR}" pattern="yyyy/MM/dd"/>">	<br>			
+		<input type="text" class="date form-control" class="form-control" id="beginScanTime" style="width:15%" name="SHIYOU_STR_FR" value="<fmt:formatDate value="${user.SHIYOU_STR_FR}" pattern="yyyy/MM/dd"/>">
+		<form:errors path="SHIYOU_STR_FR" cssStyle="color:red"/><br>			
 		<label class="col-sm-3 control-label">使用終了日：</label>
-		<input type="text" class="date form-control" class="form-control" id="endScanTime" style="width:15%" name="SHIYOU_END_FR" value="<fmt:formatDate value="${user.SHIYOU_END_FR}" pattern="yyyy/MM/dd"/>">		
+		<input type="text" class="date form-control" class="form-control" id="endScanTime" style="width:15%" name="SHIYOU_END_FR" value="<fmt:formatDate value="${user.SHIYOU_END_FR}" pattern="yyyy/MM/dd"/>">
+		<form:errors path="SHIYOU_END_FR" cssStyle="color:red"/><br>		
 	</div>
 	<div align="right" style=background-color:#00b0ff> 
 		<input type="button" id="check" class="btn btn-info" onclick="dataCheck()" value="確　認"/>		 
 		<input type="submit" class="btn btn-info" value="登　録" />
 	</div>	
-	</form>
+	</form:form>
 
 </body>
 </html>
