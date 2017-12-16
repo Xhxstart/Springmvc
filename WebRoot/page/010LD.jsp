@@ -25,6 +25,25 @@
 		</style>
 <title>010LD</title>
 <script type="text/javascript"> 
+$(function() {	
+	 $("tbody tr img").hide(); 
+	 $("div tbody tr").addClass("change");
+	  $("div tbody tr").click(function() {  
+	  //$(this).addClass("change").siblings().removeClass("change");
+	  $(this).css("background-color", "#99CCFF").siblings().css("background-color", "");  
+	  $("tbody tr img").hide();   
+	   var rows = $(this).prevAll().length;//行号
+	   var i=0; 
+	    $("tbody tr img").each(function(){	
+		if (i>3)
+		{return false;}
+		$("tbody tr img").eq(rows*4+i).show();
+		i++;
+	    });		
+		//alert($(this).text());获取每个单元格内容
+	  });
+	 });
+
 	function dataCheck() {
 		var startTime=$("#STbeginScanTime").val(); 
 		var endTime=$("#STendScanTime").val();  
@@ -104,7 +123,7 @@ password:${user.SHAIN_CD }  --%>
 		<input type="submit" class="btn btn-info" onclick="dataCheck()" value="検 索" />
 	</div>	
 	</form:form>
-
+<div>
 <table class="table table-hover table-bordered">  
   <thead>
     <tr style=background-color:#00b0ff>
@@ -118,18 +137,19 @@ password:${user.SHAIN_CD }  --%>
   <tbody>
       <c:forEach var="User" items="${userlist}">
       <tr>
-      	 <td align="center">
+      	<td align="center" style="width:30%">
 		<a href="inser.html?SHAIN_CD=${User.SHAIN_CD}"><img src="${pageContext.request.contextPath }/imges/0.jpg"  width="24" height="24" /></a>
 		<a href="Update.html?SHAIN_CD=${User.SHAIN_CD}"><img src="${pageContext.request.contextPath }/imges/1.jpg" width="24" height="24" /></a>
 		<a href="Update.html?SHAIN_CD=${User.SHAIN_CD}"><img src="${pageContext.request.contextPath }/imges/22.jpg" width="24" height="24"/></a></td>
-      	<td>${User.SHAIN_NM }</td>
-		<td>${User.SHAIN_CD }</td>
-		<td>${User.MAIL }</td>
-		<td><a href="delete.html?SHAIN_CD=${User.SHAIN_CD}"><img src="${pageContext.request.contextPath }/imges/3.jpg" width="24" height="24"/></a></td>
+      	<td style="width:20%">${User.SHAIN_NM }</td>
+		<td style="width:20%">${User.SHAIN_CD }</td>
+		<td style="width:20%">${User.MAIL }</td>
+		<td style="width:10%"><a href="delete.html?SHAIN_CD=${User.SHAIN_CD}"><img src="${pageContext.request.contextPath }/imges/3.jpg" width="24" height="24"/></a></td>
 	  </tr>	
       </c:forEach>   
   </tbody>
 </table>
+</div>
  <div align="center">
 	<ul class="pagination pagination-lg">	
     <li><a href="#">&laquo;</a></li>

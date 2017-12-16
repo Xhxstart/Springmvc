@@ -56,11 +56,11 @@ public class UserController {
 			mav.setViewName("010LD");
 			if (user!=null){ 
 				kensu = (user.getKENSU()!=null) ? user.getKENSU():10 ;
-				count = userMapper.findPageCountByName(user);
-				if (count>0){
+				count = (userMapper.findPageCountByName(user)!=0) ? userMapper.findPageCountByName(user):1;
+				if (count>=0){
 					currentpage  = (user.getCURRENTPAGE()!=null ) ? user.getCURRENTPAGE():1 ;
 				}
-				else currentpage = 0;
+				else currentpage = 1;
 				
 				row_Fr = (currentpage-1) * kensu+1;
 				row_To = currentpage * kensu;
