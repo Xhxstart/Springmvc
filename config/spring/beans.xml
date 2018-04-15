@@ -34,21 +34,25 @@
       </bean>
       <bean id="UserValidator" class="com.xhx.validator.UserValidator">     	
      </bean>
+     <bean id="User" class="com.xhx.ssm.po.User" autowire="byName">
+     	<property name="GET_ROW_FR" value="1"></property>
+     </bean>
      <!-- 配置dao接口 -->
      <bean id="UserDao" class="com.xhx.ssm.dao.UserDaoImpl">
      	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
      </bean>
      
      <!-- 配置mapper 通过MapperFactoryBean创建	sqlSessionFactory-->
-     <!--<bean id="UserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-      	既然你是一个接口，就要指定实现哪一个接口 
+     <!--<bean id="UserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+     <!--Mybatis在与Spring集成的时候可以配置MapperFactoryBean来生成Mapper接口的代理. -->
+      <!--	既然你是一个接口，就要指定实现哪一个接口 
      	<property name="mapperInterface" value="com.xhx.mapper.UserMapper"></property>     
      	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
      </bean>
      -->
      
-     <!-- mapper批量扫描，从mapper包中扫描出mapper接口，自动创建对象并且在spring容器中注册
-     	遵循的规范：将mapper。java和mapper。xml映射文件名保持一致，且在同一个目录中
+     <!-- mapper批量扫描，从mapper包中扫描出mapper接口，自动创建对象并且在spring容器中注册,实现mapper接口
+     	遵循的规范：将mapper.java和mapper.xml映射文件名保持一致，且在同一个目录中
      	自动扫秒的	mapper对象的bean的id为mapper类名（首字母小写）         
       -->
       <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

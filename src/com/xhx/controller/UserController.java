@@ -1,5 +1,6 @@
 package com.xhx.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -42,7 +43,7 @@ public class UserController {
 	 * return
 	 * @throws Exception 
 	 * ***/
-	@RequestMapping(value="login")
+	@RequestMapping(value="/login")
 	public ModelAndView login(@Validated({ First.class} ) @ModelAttribute("user") User user,Errors errors,ModelAndView mav) throws Exception {
 		//创建usermapper对象,mybatis自动生成Mapper代理对象
 		UserMapper userMapper = (UserMapper) ac.getBean("userMapper");
@@ -69,6 +70,12 @@ public class UserController {
 				user.setGET_ROW_FR(row_Fr);
 				user.setGET_ROW_TO(row_To);
 				user.setPAGECOUNT(count%kensu==0 ? count/kensu:count/kensu+1);
+				List<String> num = new ArrayList<String>();
+				num.add("1");
+				num.add("2");
+				num.add("a");
+				num.add("b");
+				user.setNum(num);
 				List<User> userlist = userMapper.findUserByName(user);			
 				//内部其实把model 通过request.setAttribute(modelName, modelValue); 放入的 
 				mav.addObject("userlist",userlist);
@@ -86,7 +93,7 @@ public class UserController {
 	 * return
 	 * @throws Exception 
 	 * ***/
-	@RequestMapping(value="search")
+	@RequestMapping(value="/search")
 	public ModelAndView search(User user,Errors errors,ModelAndView mav) throws Exception {
 		//创建usermapper对象,mybatis自动生成Mapper代理对象
 		UserMapper userMapper = (UserMapper) ac.getBean("userMapper");
@@ -114,8 +121,16 @@ public class UserController {
 				user.setGET_ROW_TO(row_To);
 				user.setPAGECOUNT(count%kensu==0 ? count/kensu:count/kensu+1);
 				List<User> userlist = userMapper.findUserByName(user);			
-				//内部其实把model 通过request.setAttribute(modelName, modelValue); 放入的 
-				mav.addObject("userlist",userlist);
+				//内部其实把model 通过request.setAttribute(modelName, modelValue); 放入的
+				
+				if(userlist.isEmpty()){
+					mav.addObject("message","該当条件下情報がありません！");
+					mav.addObject("userlist",null);
+				}
+				else{
+					mav.addObject("userlist",userlist);
+				}
+				
 			}		
 		/*}*/
 
@@ -125,7 +140,7 @@ public class UserController {
 	}
 	
 	
-	@RequestMapping(value="inser")
+	@RequestMapping(value="/inser")
 	public ModelAndView inser(String SHAIN_CD, @Validated({ First.class,Second.class } )  @ModelAttribute("user") User user,Errors errors,ModelAndView mav ,HttpSession session) throws Exception {
 		//创建usermapper对象,mybatis自动生成Mapper代理对象
 		

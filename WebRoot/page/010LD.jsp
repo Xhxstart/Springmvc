@@ -124,6 +124,9 @@ password:${user.SHAIN_CD }  --%>
 	</div>	
 	</form:form>
 <div>
+<c:if test="${empty userlist}">
+  <p style="color:red" align="center"> ERROR :${ requestScope.message }</p>
+</c:if>
 <table class="table table-hover table-bordered">  
   <thead>
     <tr style=background-color:#00b0ff>
@@ -148,8 +151,13 @@ password:${user.SHAIN_CD }  --%>
 	  </tr>	
       </c:forEach>   
   </tbody>
+  <%--  <form:select path="user" value="aaa">
+  <option/>请选择人员
+            <form:options items="${user.num}"/>
+  </form:select> --%>         
 </table>
 </div>
+<c:if test="${!empty userlist}">
  <div align="center">
 	<ul class="pagination pagination-lg">	
     <li><a href="#">&laquo;</a></li>
@@ -164,5 +172,6 @@ password:${user.SHAIN_CD }  --%>
 <div align="center">
 	共【<label>${user.PAGECOUNT} </label>】页当前页【<label>${user.CURRENTPAGE} </label>】
 </div>
+</c:if>
 </body>
 </html>

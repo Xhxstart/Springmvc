@@ -2,6 +2,7 @@ package com.xhx.ssm.po;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Past;
@@ -58,6 +59,8 @@ public class User implements Serializable{
 	private Integer CURRENTPAGE;
 	
 	private Integer PAGECOUNT;
+	
+	private List<String> num;
 	
 	public interface First {  
 	}  
@@ -205,6 +208,14 @@ public class User implements Serializable{
 
 	public void setSearchUser(SearchUser searchUser) {
 		this.searchUser = searchUser;
+	}
+
+	public List<String> getNum() {
+		return num;
+	}
+
+	public void setNum(List<String> num) {
+		this.num = num;
 	}
 
 }
