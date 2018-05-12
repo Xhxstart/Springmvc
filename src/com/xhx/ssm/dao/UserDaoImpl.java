@@ -36,9 +36,9 @@ public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
 
 
 	@Override
-	public void insertUser(User user) throws Exception {
+	public int insertUser(User user) throws Exception {
 		// TODO Auto-generated method stub
-		
+		return 1;
 	}
 
 }

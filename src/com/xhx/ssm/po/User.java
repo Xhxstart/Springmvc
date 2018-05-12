@@ -16,8 +16,10 @@ public class User implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	//如果我们想在新增的情况验证id和name，而修改的情况验证name和password，怎么办？ 那么就需要分组了。
+	//d 首先定义分组接口：
 	@Pattern(regexp="^[0-9A-Za-z]*$", message="{code.fmt.error}",groups = {First.class , Second.class })
-	@NotBlank(message="{password.null.error}",groups = { First.class ,Second.class})
+	@NotBlank(message="{kaisha_cd.null.error}",groups = { First.class ,Second.class})
 	private String KAISHA_CD;
 	
 	@Pattern(regexp="^[0-9A-Za-z]*$", message="{code.fmt.error}",groups = { Second.class })
@@ -62,11 +64,8 @@ public class User implements Serializable{
 	
 	private List<String> num;
 	
-	public interface First {  
-	}  
-	  
-	public interface Second {  
-	} 
+	private Date INS_TM;
+		
 	public Date getSHIYOU_STR_FR() {
 		return SHIYOU_STR_FR;
 	}
@@ -218,4 +217,17 @@ public class User implements Serializable{
 		this.num = num;
 	}
 
+	public Date getINS_TM() {
+		return INS_TM;
+	}
+
+	public void setINS_TM(Date iNS_TM) {
+		INS_TM = iNS_TM;
+	}
+
+	public interface First {  
+	}  
+	  
+	public interface Second {  
+	} 
 }

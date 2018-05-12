@@ -18,7 +18,7 @@ public interface UserMapper {
 	
 	public Integer findPageCountByName(User user) throws Exception;
 	
-	public void insertUser(User user) throws Exception;
+	public int addUser(User user) throws Exception;
 	
 	public User UpdateUser(User user) throws Exception;
 	

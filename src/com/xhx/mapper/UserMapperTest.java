@@ -29,7 +29,7 @@ public class UserMapperTest {
     SqlSession.close();
     */
 	
-	private  ApplicationContext ac;
+	private static  ApplicationContext ac;
 	@Before
 	public void setUp() throws Exception {
 		ac = new ClassPathXmlApplicationContext("classpath:spring/beans.xml");

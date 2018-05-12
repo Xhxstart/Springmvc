@@ -15,7 +15,10 @@ public class UserValidator implements Validator {
 		// TODO Auto-generated method stub
 		return User.class.isAssignableFrom(clazz);
 	}
-
+	
+	//使用sprig的Validation自定义验证规则
+	/*有时候默认的规则可能还不够，有时候还需要自定义规则，
+	比如屏蔽关键词验证是非常常见的一个功能，比如在发帖时帖子中不允许出现admin等关键词。*/
 	@Override
 	public void validate(Object target, Errors errors) {
 		// TODO Auto-generated method stub
